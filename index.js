@@ -10,7 +10,7 @@ app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`)
 })
 
-app.get('/', async (req, res) => {
-  const user = await lib.UsersController.getCurrentUserData()
-  res.send(user)
+app.get('/v1/activities', async (req, res) => {
+  // verify if user is Paola, send email with data if so
+  res.send()
 })

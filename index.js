@@ -13,26 +13,29 @@ app.listen(PORT, () => {
 })
 
 app.get('/', async (req, res) => {
-  // Below  code shows Paola in list with ID 11765267
-  /* const input = {}
-  input.limit = 16
-
+  // Below  code was used to get Paola in list with ID 11765267
+  /*
   const persons = await lib.PersonsController.getAllPersons(input, (person) => {
     console.log(person)
   }) */
 
-  // get all activities for Paola
-
+  // get all activities for Paola, filter to their ID & excluding items that are completed
   const firstRun = lib.ActivitiesController.getAllActivitiesAssignedToAParticularUser({ userId: 11765267, limitId: 11765267, done: 0 }, () => {
   })
 
-  await Promise.all([firstRun]).then((result) => {
-    console.log('First Run length: ', result[0].data.length)
-    setTimeout(async () => {
+  await Promise.all([firstRun]).then((result) => { // get Paola's activities
+    console.log('Last item ID: ', result[0].data[result[0].data.length - 1].id) // get the last item
+    setTimeout(async () => { // then sleep for allotted time
       const secondRun = await lib.ActivitiesController.getAllActivitiesAssignedToAParticularUser({ userId: 11765267, limitId: 11765267, done: 0 }, () => {
-      })
+      }) // next get the list again
       console.log('Second Run length', secondRun.data.length)
-    }, 10000)
+      // compare list then email if list different
+      if (secondRun.data[secondRun.data.length] === result[0].data[result[0].data.length]) {
+        // this item is the same
+      } else {
+        console.log('DIfferent Item')
+      }
+    }, 120000)
   })
 
   res.sendStatus(200)

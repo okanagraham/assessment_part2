@@ -22,21 +22,20 @@ app.get('/', async (req, res) => {
   }) */
 
   // get all activities for Paola
-
   const input = {}
   input.userId = 11765267
-  input.limit = 1000
 
   const firstRun = lib.ActivitiesController.getAllActivitiesAssignedToAParticularUser(input, () => {
-
   })
 
-  const secondRun = lib.ActivitiesController.getAllActivitiesAssignedToAParticularUser(input, () => {
-
-  })
-
-  await Promise.all([firstRun, secondRun]).then((result) => {
-    console.log(result)
+  await Promise.all([firstRun]).then((result) => {
+    console.log(result[0])
+    setTimeout(async () => {
+      const secondRun = await lib.ActivitiesController.getAllActivitiesAssignedToAParticularUser(input, () => {
+      })
+      console.log('------NEXT LINE-------')
+      console.log(secondRun)
+    }, 10000)
   })
 
   res.sendStatus(200)

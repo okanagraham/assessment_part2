@@ -32,7 +32,7 @@ app.get('/', async (req, res) => {
   })
 
   await Promise.all([firstRun]).then((firstResult) => { // get Paola's activities
-    console.log('Last item ID: ', firstResult[0].data[firstResult[0].data.length - 1].id) // get the last item
+    /// DEBUG: console.log('Last item ID: ', firstResult[0].data[firstResult[0].data.length - 1].id) // get the last item
     setTimeout(async () => { // then sleep for allotted time
       const secondRun = await lib.ActivitiesController.getAllActivitiesAssignedToAParticularUser({ userId: 11765267, limitId: 11765267, done: 0 }, () => {
       })
@@ -55,7 +55,7 @@ app.get('/', async (req, res) => {
           }
         })
       }
-    }, 10000)
+    }, 120000)
   })
 
   res.sendStatus(200)
